@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Institutions | Infant Jesus Church, Kallettumkara{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Service to Society</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4" data-i18n="nav.institutions">Institutions</h1>
+    <p class="text-lg text-gray-300 font-light">Educational and social institutions serving the community under the parish.</p>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- High School -->
+      <div class="glass-card rounded-2xl overflow-hidden group">
+        <div class="h-48 bg-gold-900/20 flex items-center justify-center border-b border-gold-500/10 group-hover:bg-gold-900/30 transition-colors">
+            <span class="text-6xl">🏫</span>
+        </div>
+        <div class="p-8">
+          <h3 class="font-heading text-2xl font-bold text-gold-400 mb-3">St. Sebastian's High School</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">Established in 1948, our High School has been a cornerstone of education in Thazhekad, providing quality learning and character formation for generations of students.</p>
+          <ul class="space-y-2 text-xs text-gray-500">
+            <li class="flex items-center gap-2">🔹 Grades: VIII to X</li>
+            <li class="flex items-center gap-2">🔹 Affiliation: Kerala State Board</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- LP School -->
+      <div class="glass-card rounded-2xl overflow-hidden group">
+        <div class="h-48 bg-gold-900/20 flex items-center justify-center border-b border-gold-500/10 group-hover:bg-gold-900/30 transition-colors">
+            <span class="text-6xl">✏️</span>
+        </div>
+        <div class="p-8">
+          <h3 class="font-heading text-2xl font-bold text-gold-400 mb-3">St. Sebastian's L.P. School</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">Nurturing young minds in their foundational years with a focus on holistic development and faith-based values.</p>
+          <ul class="space-y-2 text-xs text-gray-500">
+            <li class="flex items-center gap-2">🔹 Grades: I to IV</li>
+            <li class="flex items-center gap-2">🔹 Medium: Malayalam/English</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Convent -->
+      <div class="glass-card rounded-2xl overflow-hidden group">
+        <div class="h-48 bg-gold-900/20 flex items-center justify-center border-b border-gold-500/10 group-hover:bg-gold-900/30 transition-colors">
+            <span class="text-6xl">🕊️</span>
+        </div>
+        <div class="p-8">
+          <h3 class="font-heading text-2xl font-bold text-gold-400 mb-3">Claritian Convent</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">The sisters of the Claritian congregation provide spiritual support, educational assistance, and social outreach within the parish community.</p>
+        </div>
+      </div>
+
+      <!-- Social Centre -->
+      <div class="glass-card rounded-2xl overflow-hidden group">
+        <div class="h-48 bg-gold-900/20 flex items-center justify-center border-b border-gold-500/10 group-hover:bg-gold-900/30 transition-colors">
+            <span class="text-6xl">🤝</span>
+        </div>
+        <div class="p-8">
+          <h3 class="font-heading text-2xl font-bold text-gold-400 mb-3">Parish Social Service Centre</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-6">Coordinating charitable activities, housing projects, and medical assistance for the underprivileged members of our community.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

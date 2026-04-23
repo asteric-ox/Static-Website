@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Catechism | Infant Jesus Church, Kallettumkara{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Faith Formation</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4" data-i18n="nav.catechism">Catechism</h1>
+    <p class="text-lg text-gray-300 font-light">Nurturing the next generation in the light of the Gospel and Church tradition.</p>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="max-w-5xl mx-auto">
+    <div class="glass-card rounded-2xl overflow-hidden border border-gold-500/10">
+      <div class="bg-gradient-to-r from-gold-600/10 to-transparent p-8 border-b border-gold-500/10">
+        <h2 class="font-heading text-2xl font-bold text-gold-400">Sunday School Schedule</h2>
+      </div>
+      <div class="p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-500 shrink-0">🕒</div>
+              <div>
+                <h3 class="text-white font-semibold mb-1">Time</h3>
+                <p class="text-gray-400 text-sm">Every Sunday: 08:30 AM – 10:30 AM</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-500 shrink-0">📍</div>
+              <div>
+                <h3 class="text-white font-semibold mb-1">Location</h3>
+                <p class="text-gray-400 text-sm">Parish Sunday School Hall & High School Wing</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-church-accent/20 p-6 rounded-xl border border-gold-500/5">
+            <p class="text-sm text-gray-300 leading-relaxed italic">"Let the children come to me, and do not hinder them, for the kingdom of heaven belongs to such as these." — Matthew 19:14</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="glass-card p-8 rounded-2xl text-center">
+            <div class="text-3xl mb-4">📚</div>
+            <h3 class="font-heading text-xl font-bold text-white mb-2">Curriculum</h3>
+            <p class="text-sm text-gray-400">Following the official Syro-Malabar Catechetical Department syllabus from KG to Class XII.</p>
+        </div>
+        <div class="glass-card p-8 rounded-2xl text-center">
+            <div class="text-3xl mb-4">🎓</div>
+            <h3 class="font-heading text-xl font-bold text-white mb-2">Sacraments</h3>
+            <p class="text-sm text-gray-400">Special preparation for First Holy Communion (Class IV) and Chrismation (Class VIII).</p>
+        </div>
+        <div class="glass-card p-8 rounded-2xl text-center">
+            <div class="text-3xl mb-4">🎨</div>
+            <h3 class="font-heading text-xl font-bold text-white mb-2">Activities</h3>
+            <p class="text-sm text-gray-400">Vacation Bible School (VBS), Bible Kalotsavam, and spiritual retreats for all students.</p>
+        </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login | St. Sebastian's Shrine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { maroon:{700:'#800000',900:'#4a0000'}, gold:{400:'#e8be2a',500:'#d4af37',600:'#b08a18',700:'#8a6716'}, church:{bg:'#0f0a07',card:'#1a1410'} }, fontFamily: { heading:['"Playfair Display"','serif'], body:['Inter','sans-serif'] } }}}
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+</head>
+<body class="bg-church-bg font-body min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-gold-500 to-gold-700 flex items-center justify-center shadow-lg mb-4">
+        <span class="text-2xl font-heading font-bold text-maroon-900">✝</span>
+      </div>
+      <h1 class="font-heading text-2xl font-bold text-white">Admin Dashboard</h1>
+      <p class="text-gray-400 text-sm mt-1">Infant Jesus Church, Kallettumkara</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for cat, msg in messages %}
+    <div class="mb-4 px-4 py-3 rounded-lg text-sm {% if cat == 'danger' %}bg-red-900/50 text-red-300 border border-red-800/50{% else %}bg-amber-900/50 text-amber-300 border border-amber-800/50{% endif %}">{{ msg }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="bg-church-card border border-gold-900/20 rounded-2xl p-8 space-y-6 shadow-2xl">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-300 mb-1.5">Username</label>
+        <input type="text" id="username" name="username" required class="w-full px-4 py-3 bg-church-bg border border-gold-900/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-colors"/>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-300 mb-1.5">Password</label>
+        <input type="password" id="password" name="password" required class="w-full px-4 py-3 bg-church-bg border border-gold-900/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/20 transition-colors"/>
+      </div>
+      <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-gold-600 to-gold-700 text-maroon-900 rounded-xl font-semibold hover:from-gold-500 hover:to-gold-600 transition-all shadow-lg shadow-gold-500/20">
+        Sign In
+      </button>
+    </form>
+    <p class="text-center mt-6 text-xs text-gray-500"><a href="/" class="text-gold-600 hover:text-gold-400 transition-colors">← Back to Website</a></p>
+  </div>
+</body>
+</html>

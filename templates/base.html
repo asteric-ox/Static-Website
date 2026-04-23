@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{% block title %}Infant Jesus Church, Kallettumkara{% endblock %}</title>
+    <meta name="description" content="{% block meta_desc %}Official website of Infant Jesus Church, Kallettumkara{% endblock %}"/>
+    <meta name="keywords" content="Infant Jesus Church, Kallettumkara, Syro-Malabar, Thrissur, Catholic Church"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: { extend: {
+          colors: {
+            maroon: {700:'#800000',800:'#6b0000',900:'#4a0000',950:'#2d0000'},
+            gold:   {400:'#e8be2a',500:'#d4af37',600:'#b08a18',700:'#8a6716',900:'#62451c'},
+            church: {bg:'#0f0a07',card:'#1a1410',accent:'#2a1f15'}
+          },
+          fontFamily: {
+            heading:['"Playfair Display"','Georgia','serif'],
+            body:['Inter','system-ui','sans-serif']
+          }
+        }}
+      }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    {% block head_extra %}{% endblock %}
+</head>
+<body class="bg-church-bg text-gray-200 font-body antialiased">
+<!-- PRELOADER / INTRO ANIMATION -->
+<div id="preloader" class="fixed inset-0 z-[100] flex items-center justify-center transition-opacity duration-1000">
+  <div class="text-center">
+    <div class="mb-8 flex justify-center">
+      <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.2)] animate-zoom-in">
+        <img src="/static/images/Infant.png" alt="Infant Jesus" class="w-full h-full object-cover"/>
+      </div>
+    </div>
+    <div class="animate-fade-in-up-delay">
+      <h1 class="font-heading text-4xl sm:text-6xl font-bold text-white mb-2 tracking-tight">Infant Jesus Church</h1>
+      <p class="font-heading text-2xl sm:text-3xl text-gold-500 tracking-[0.2em] uppercase font-semibold">Kallettumkara</p>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <a href="{{ url_for('home') }}" class="flex items-center gap-3 group" id="nav-brand">
+        <div class="w-14 h-14 rounded-full overflow-hidden shadow-lg group-hover:scale-110 transition-transform">
+          <img src="/static/images/Infant.png" alt="Infant Jesus Logo" class="w-full h-full object-cover"/>
+        </div>
+        <div class="hidden sm:block">
+          <p class="font-heading text-gold-400 text-lg font-semibold leading-tight">Infant Jesus Church</p>
+          <p class="text-xs text-gold-600/70 tracking-wider uppercase">Kallettumkara</p>
+        </div>
+      </a>
+      <div class="hidden xl:flex items-center gap-1" id="nav-links">
+        <a href="{{ url_for('home') }}" class="nav-link" data-i18n="nav.home">Home</a>
+        <a href="{{ url_for('catechism') }}" class="nav-link" data-i18n="nav.catechism">Catechism</a>
+        <a href="{{ url_for('history') }}" class="nav-link" data-i18n="nav.history">History</a>
+        <a href="{{ url_for('family_units') }}" class="nav-link" data-i18n="nav.family_units">Family Units</a>
+        <a href="{{ url_for('associations') }}" class="nav-link" data-i18n="nav.associations">Pious Associations</a>
+        <a href="{{ url_for('bulletin') }}" class="nav-link" data-i18n="nav.bulletin">Bulletin</a>
+        <a href="{{ url_for('gallery') }}" class="nav-link" data-i18n="nav.gallery">Gallery</a>
+        <a href="{{ url_for('contact') }}" class="nav-link" data-i18n="nav.contact">Contact</a>
+        <button id="lang-toggle" class="ml-4 px-3 py-1.5 border border-gold-700/40 rounded-full text-xs font-semibold text-gold-400 hover:bg-gold-500/10 transition-colors">EN | മല</button>
+      </div>
+      <button id="mobile-menu-btn" class="xl:hidden p-2 text-gold-400 hover:text-gold-300" aria-label="Menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobile-menu" class="xl:hidden hidden bg-church-bg/98 backdrop-blur-xl border-t border-gold-900/30">
+    <div class="px-4 py-6 space-y-1">
+      <a href="{{ url_for('home') }}" class="mobile-nav-link" data-i18n="nav.home">Home</a>
+      <a href="{{ url_for('catechism') }}" class="mobile-nav-link" data-i18n="nav.catechism">Catechism</a>
+      <a href="{{ url_for('history') }}" class="mobile-nav-link" data-i18n="nav.history">History</a>
+      <a href="{{ url_for('family_units') }}" class="mobile-nav-link" data-i18n="nav.family_units">Family Units</a>
+      <a href="{{ url_for('associations') }}" class="mobile-nav-link" data-i18n="nav.associations">Pious Associations</a>
+      <a href="{{ url_for('bulletin') }}" class="mobile-nav-link" data-i18n="nav.bulletin">Bulletin</a>
+      <a href="{{ url_for('gallery') }}" class="mobile-nav-link" data-i18n="nav.gallery">Gallery</a>
+      <a href="{{ url_for('contact') }}" class="mobile-nav-link" data-i18n="nav.contact">Contact</a>
+      <button id="lang-toggle-mobile" class="w-full mt-4 px-4 py-2 border border-gold-700/40 rounded-lg text-sm font-semibold text-gold-400 hover:bg-gold-500/10 transition-colors">EN | മല</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="fixed top-24 right-4 z-[60] space-y-2 max-w-sm" id="flash-container">
+  {% for cat, msg in messages %}
+  <div class="flash-msg px-5 py-3 rounded-xl shadow-2xl backdrop-blur-xl text-sm font-medium border
+    {% if cat == 'success' %}bg-emerald-900/80 border-emerald-700/50 text-emerald-200
+    {% elif cat == 'danger' %}bg-red-900/80 border-red-700/50 text-red-200
+    {% else %}bg-sky-900/80 border-sky-700/50 text-sky-200{% endif %}">{{ msg }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<main>{% block content %}{% endblock %}</main>
+
+<!-- FOOTER -->
+<footer class="relative bg-church-card border-t border-gold-900/20">
+  <div class="h-1 bg-gradient-to-r from-transparent via-gold-600 to-transparent"></div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div>
+        <p class="font-heading text-gold-400 font-semibold mb-3">Infant Jesus Church</p>
+        <p class="text-sm text-gray-400 leading-relaxed">Kallettumkara, Thrissur, Kerala – 680683</p>
+      </div>
+      <div>
+        <h4 class="font-heading text-gold-400 font-semibold mb-3 text-sm uppercase tracking-wider">Quick Links</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="{{ url_for('home') }}" class="text-gray-400 hover:text-gold-400 transition-colors">Home</a></li>
+          <li><a href="{{ url_for('history') }}" class="text-gray-400 hover:text-gold-400 transition-colors">History</a></li>
+          <li><a href="{{ url_for('spiritual_life') }}" class="text-gray-400 hover:text-gold-400 transition-colors">Spiritual Life</a></li>
+          <li><a href="{{ url_for('about') }}" class="text-gray-400 hover:text-gold-400 transition-colors">About Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="font-heading text-gold-400 font-semibold mb-3 text-sm uppercase tracking-wider">Contact</h4>
+        <p class="text-sm text-gray-400 mb-1"><a href="tel:+917909151122" class="hover:text-gold-400">+91 79091 51122</a></p>
+        <p class="text-sm text-gray-400 mb-4"><a href="mailto:infantjesuskta72@gmail.com" class="hover:text-gold-400">infantjesuskta72@gmail.com</a></p>
+        <a href="tel:+917909151122" class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-gold-600 to-gold-700 text-maroon-950 rounded-lg text-sm font-semibold hover:from-gold-500 hover:to-gold-600 transition-all shadow-lg">Contact Office</a>
+      </div>
+    </div>
+    <div class="mt-12 pt-8 border-t border-gold-900/20 text-center">
+      <p class="text-xs text-gray-500">© 2026 Infant Jesus Church, Kallettumkara. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

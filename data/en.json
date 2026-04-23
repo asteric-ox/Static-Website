@@ -1,0 +1,48 @@
+{
+  "nav": {
+    "home": "Home",
+    "parish": "Parish",
+    "catechism": "Catechism",
+    "history": "History",
+    "family_units": "Family Units",
+    "institutions": "Institutions",
+    "associations": "Pious Associations",
+    "bulletin": "Bulletin",
+    "gallery": "Gallery",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Infant Jesus Church",
+    "subtitle": "Kallettumkara – Diocese of Irinjalakuda",
+    "cta_mass": "Join Live Mass",
+    "cta_prayer": "Request a Prayer"
+  },
+  "mass": {
+    "title": "Today's Holy Mass",
+    "sunday_title": "Sunday Mass Schedule",
+    "weekday_title": "Weekday Mass Schedule"
+  },
+  "announcements": {
+    "title": "Parish Announcements"
+  },
+  "council": {
+    "title": "Parish Leadership"
+  },
+  "history": {
+    "title": "Our Sacred History",
+    "subtitle": "Discover our journey of faith"
+  },
+  "footer": {
+    "address": "Infant Jesus Church, Kallettumkara, Thrissur, Kerala – 680683",
+    "phone": "+91 79091 51122",
+    "email": "infantjesuskta72@gmail.com",
+    "copyright": "© 2026 Infant Jesus Church, Kallettumkara. All rights reserved."
+  },
+  "prayer_form": {
+    "title": "Request a Prayer",
+    "name": "Your Name",
+    "email": "Email Address",
+    "intention": "Prayer Intention",
+    "submit": "Submit Prayer Request"
+  }
+}

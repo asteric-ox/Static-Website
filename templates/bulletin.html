@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Parish Bulletin | Infant Jesus Church, Kallettumkara{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Stay Updated</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4" data-i18n="nav.bulletin">Bulletin</h1>
+    <p class="text-lg text-gray-300 font-light">Download the latest weekly news, mass intentions, and announcements.</p>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="grid grid-cols-1 gap-6">
+      <!-- Latest Bulletin -->
+      <div class="glass-card p-8 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6 border-2 border-gold-500/20">
+        <div class="flex items-center gap-6">
+          <div class="w-16 h-16 rounded-xl bg-gold-500 flex items-center justify-center text-maroon-900 shadow-lg shadow-gold-500/20">
+            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+          </div>
+          <div>
+            <h3 class="font-heading text-xl font-bold text-white mb-1">Latest Parish Bulletin</h3>
+            <p class="text-gold-500/70 text-sm">April 26, 2026 • 3rd Sunday of Easter</p>
+          </div>
+        </div>
+        <a href="#" class="px-8 py-3 bg-gradient-to-r from-gold-600 to-gold-700 text-maroon-950 rounded-xl font-bold hover:scale-105 transition-transform flex items-center gap-2">
+          <span>Download PDF</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+        </a>
+      </div>
+
+      <!-- Previous Bulletins -->
+      <div class="mt-12">
+        <h3 class="font-heading text-xl font-bold text-white mb-6">Archive</h3>
+        <div class="space-y-3">
+          {% for i in range(1, 5) %}
+          <div class="glass-card p-5 rounded-xl flex items-center justify-between hover:bg-gold-500/5 transition-colors group">
+            <div class="flex items-center gap-4">
+              <span class="text-gold-600 text-sm font-mono">0{{ i }}</span>
+              <p class="text-gray-300 text-sm">Parish Bulletin – April {{ 26 - (i*7) }}, 2026</p>
+            </div>
+            <button class="text-gold-500/40 group-hover:text-gold-500 transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+            </button>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

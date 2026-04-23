@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block title %}Infant Jesus Church, Kallettumkara | Home{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="hero-pattern absolute inset-0 opacity-10"></div>
+  <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-700/30 bg-gold-500/5 mb-8 animate-fade-in">
+      <span class="w-2 h-2 rounded-full bg-gold-500 animate-pulse"></span>
+      <span class="text-xs font-medium text-gold-400 tracking-wider uppercase">Syro-Malabar Catholic Church • Diocese of Irinjalakuda</span>
+    </div>
+    <h1 class="font-heading text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 animate-fade-in-up" data-i18n="hero.title">
+      Infant Jesus<br/><span class="text-gold-400">Church</span>
+    </h1>
+    <p class="text-lg sm:text-xl text-gray-300 mb-10 animate-fade-in-up-delay font-light" data-i18n="hero.subtitle">
+      Kallettumkara, Thrissur – Diocese of Irinjalakuda
+    </p>
+  </div>
+  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-gold-500/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+  </div>
+</section>
+
+<!-- ANNOUNCEMENTS MARQUEE -->
+{% if announcements %}
+<section class="relative bg-gradient-to-r from-gold-700 via-gold-600 to-gold-700 py-3 overflow-hidden">
+  <div class="marquee-track flex gap-16 whitespace-nowrap">
+    {% for a in announcements %}
+    <span class="inline-flex items-center gap-2 text-maroon-950 font-semibold text-sm">
+      <span class="w-1.5 h-1.5 rounded-full bg-maroon-700"></span>
+      {{ a.title }}
+    </span>
+    {% endfor %}
+    {% for a in announcements %}
+    <span class="inline-flex items-center gap-2 text-maroon-950 font-semibold text-sm">
+      <span class="w-1.5 h-1.5 rounded-full bg-maroon-700"></span>
+      {{ a.title }}
+    </span>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- PARISH OVERVIEW (Integrated from Parish Page) -->
+<section id="parish-overview" class="py-24 px-4 bg-church-card/30">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="animate-fade-in-up">
+        <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Our Sacred Community</p>
+        <h2 class="font-heading text-4xl font-bold text-white mb-8">A Legacy of Faith</h2>
+        <div class="space-y-6 text-gray-300 leading-relaxed text-lg font-light">
+          <p>Infant Jesus Church, Kallettumkara, is a beacon of Syro-Malabar Catholicism. Our parish is not just a building, but a living body of Christ, serving as a sanctuary for thousands of faithful.</p>
+          <p>From the solemnity of the Holy Qurbana to the vibrant community life in our family units, the parish is the heart of our spiritual journey. We are dedicated to nurturing the faith of current and future generations.</p>
+        </div>
+        <div class="mt-12 grid grid-cols-2 gap-8">
+          <div class="glass-card p-8 rounded-2xl text-center border border-gold-500/10">
+            <span class="block text-4xl font-bold text-gold-500 mb-2">800+</span>
+            <span class="text-xs text-gray-500 uppercase tracking-widest font-semibold">Families</span>
+          </div>
+          <div class="glass-card p-8 rounded-2xl text-center border border-gold-500/10">
+            <span class="block text-4xl font-bold text-gold-500 mb-2">IJK</span>
+            <span class="text-xs text-gray-500 uppercase tracking-widest font-semibold">Diocese</span>
+          </div>
+        </div>
+      </div>
+      <div class="relative rounded-3xl overflow-hidden shadow-2xl border border-gold-500/20 group aspect-[4/5] lg:aspect-auto">
+        <img src="/static/images/ASH09186.JPG" alt="Infant Jesus Church Kallettumkara" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-church-bg via-transparent to-transparent opacity-60"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARISH LEADERSHIP (Moved up) -->
+{% if parish_council %}
+<section id="council" class="py-20 px-4 bg-church-bg">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-2">Serving the Parish</p>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white">Parish Leadership</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for p in parish_council %}
+      <div class="glass-card rounded-2xl p-6 text-center hover:scale-[1.02] transition-transform">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-gold-500 to-gold-700 flex items-center justify-center text-3xl text-maroon-900 font-heading font-bold shadow-lg">
+          {{ p.name[0] }}
+        </div>
+        <h3 class="font-heading text-lg font-semibold text-white">{{ p.name }}</h3>
+        <p class="text-gold-500 text-sm mb-2">{{ p.role }}</p>
+        {% if p.phone %}
+        <a href="tel:{{ p.phone }}" class="text-xs text-gray-400 hover:text-gold-400 transition-colors">{{ p.phone }}</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- TODAY'S MASS -->
+<section id="mass-widget" class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-2">Holy Qurbana</p>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white" data-i18n="mass.title">Today's Holy Mass – {{ today }}</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Daily -->
+      <div class="glass-card rounded-2xl p-8">
+        <h3 class="font-heading text-xl font-semibold text-gold-400 mb-6 flex items-center gap-3">
+          <span class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-500">☀</span>
+          {% if today == 'Sunday' %}Sunday Schedule{% else %}{{ today }}{% endif %}
+        </h3>
+        {% if daily_masses %}
+        <div class="space-y-4">
+          {% for m in daily_masses %}
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-church-bg/50 hover:bg-gold-500/5 transition-colors">
+            <span class="text-2xl font-heading font-bold text-gold-400 min-w-[80px]">{{ m.time }}</span>
+            <div>
+              <p class="text-white font-medium">{{ m.description }}</p>
+              <p class="text-xs text-gray-500">{{ m.category }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-gray-400 italic">No Mass scheduled today.</p>
+        {% endif %}
+      </div>
+      <!-- Sunday preview -->
+      <div class="glass-card rounded-2xl p-8">
+        <h3 class="font-heading text-xl font-semibold text-gold-400 mb-6 flex items-center gap-3">
+          <span class="w-10 h-10 rounded-lg bg-gold-500/10 flex items-center justify-center text-gold-500">⛪</span>
+          Sunday Schedule
+        </h3>
+        <div class="space-y-4">
+          {% for m in sunday_masses %}
+          <div class="flex items-center gap-4 p-4 rounded-xl bg-church-bg/50 hover:bg-gold-500/5 transition-colors">
+            <span class="text-2xl font-heading font-bold text-gold-400 min-w-[80px]">{{ m.time }}</span>
+            <div>
+              <p class="text-white font-medium">{{ m.description }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANNOUNCEMENTS DETAIL -->
+{% if announcements %}
+<section id="announcements" class="py-20 px-4 bg-church-card/50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-2">Stay Informed</p>
+      <h2 class="font-heading text-3xl sm:text-4xl font-bold text-white" data-i18n="announcements.title">Parish Announcements</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for a in announcements %}
+      <div class="glass-card rounded-2xl p-6 hover:scale-[1.02] transition-transform">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="w-2 h-2 rounded-full bg-gold-500"></span>
+          <span class="text-xs text-gold-600">{{ a.date.strftime('%b %d, %Y') if a.date else '' }}</span>
+        </div>
+        <h3 class="font-heading text-lg font-semibold text-white mb-2">{{ a.title }}</h3>
+        <p class="text-sm text-gray-400 leading-relaxed">{{ a.content }}</p>
+        {% if a.pdf_url %}
+        <a href="{{ a.pdf_url }}" class="inline-block mt-4 text-gold-400 text-sm font-medium hover:text-gold-300">Download PDF →</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+
+{% endblock %}

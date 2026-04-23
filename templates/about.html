@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}About Us | St. Sebastian's Shrine Thazhekad{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="absolute inset-0 bg-gradient-to-b from-maroon-900/40 to-church-bg"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Our Parish Family</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4">About Us</h1>
+    <p class="text-lg text-gray-300 font-light">Get to know the community, leadership, and mission of St. Sebastian's Shrine</p>
+  </div>
+</section>
+
+<!-- Parish Info -->
+<section class="py-20 px-4">
+  <div class="max-w-4xl mx-auto">
+    <div class="glass-card rounded-2xl p-10 mb-16">
+      <h2 class="font-heading text-2xl font-bold text-gold-400 mb-6">Our Parish</h2>
+      <div class="space-y-4 text-gray-300 leading-relaxed">
+        <p>St. Sebastian's Major Archiepiscopal Shrine at Thazhekad is a vibrant and historic parish of the <strong class="text-gold-400">Syro-Malabar Catholic Church</strong>, under the Archdiocese of Ernakulam-Angamaly. With roots tracing back to approximately AD 800, we are one of the oldest Christian communities in Kerala.</p>
+        <p>Our parish is home to over 1,200 families who come together in faith, worship, and service. Through our various parish organisations — including the Parish Council, Mathrusangham (Mothers' Association), KCYM (Youth Movement), and Catechism classes — we strive to build a strong, faith-filled community.</p>
+        <p>As a Major Archiepiscopal Shrine, we welcome pilgrims and visitors from across the Archdiocese and beyond, especially during our annual parish feast of St. Sebastian on January 20th.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Parish Council -->
+<section class="py-20 px-4 bg-church-card/50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-2">Leadership</p>
+      <h2 class="font-heading text-3xl font-bold text-white">Parish Council</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for p in council %}
+      <div class="glass-card rounded-2xl p-6 text-center hover:scale-[1.02] transition-transform">
+        <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-gold-500 to-gold-700 flex items-center justify-center text-4xl text-maroon-900 font-heading font-bold shadow-lg shadow-gold-500/20">
+          {{ p.name[0] }}
+        </div>
+        <h3 class="font-heading text-lg font-semibold text-white">{{ p.name }}</h3>
+        <p class="text-gold-500 text-sm mb-2">{{ p.role }}</p>
+        {% if p.phone %}
+        <a href="tel:{{ p.phone }}" class="text-xs text-gray-400 hover:text-gold-400 transition-colors">{{ p.phone }}</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Organisations -->
+<section class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-2">Community</p>
+      <h2 class="font-heading text-3xl font-bold text-white">Parish Organisations</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="glass-card rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-lg bg-gold-500/10 flex items-center justify-center text-2xl">👨‍👩‍👧‍👦</div>
+        <h3 class="font-heading text-lg font-semibold text-white mb-2">Parish Council</h3>
+        <p class="text-sm text-gray-400">Governing body of the parish elected by the community.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-lg bg-gold-500/10 flex items-center justify-center text-2xl">🙏</div>
+        <h3 class="font-heading text-lg font-semibold text-white mb-2">Mathrusangham</h3>
+        <p class="text-sm text-gray-400">Mothers' association fostering spiritual growth and charity.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-lg bg-gold-500/10 flex items-center justify-center text-2xl">⚡</div>
+        <h3 class="font-heading text-lg font-semibold text-white mb-2">KCYM</h3>
+        <p class="text-sm text-gray-400">Youth movement nurturing faith-based leadership.</p>
+      </div>
+      <div class="glass-card rounded-2xl p-6 text-center">
+        <div class="w-14 h-14 mx-auto mb-4 rounded-lg bg-gold-500/10 flex items-center justify-center text-2xl">📖</div>
+        <h3 class="font-heading text-lg font-semibold text-white mb-2">Catechism</h3>
+        <p class="text-sm text-gray-400">Sunday School for children's faith formation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

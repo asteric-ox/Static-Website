@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Gallery | Infant Jesus Church, Kallettumkara{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Moments in Faith</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4" data-i18n="nav.gallery">Gallery</h1>
+    <p class="text-lg text-gray-300 font-light">Glimpses of parish life, festivals, and liturgical celebrations.</p>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+      <button class="px-6 py-2 rounded-full bg-gold-600 text-maroon-900 font-bold text-sm">All</button>
+      <button class="px-6 py-2 rounded-full bg-church-card text-gold-500 hover:bg-gold-500/10 transition-colors text-sm font-semibold border border-gold-500/10">Festivals</button>
+      <button class="px-6 py-2 rounded-full bg-church-card text-gold-500 hover:bg-gold-500/10 transition-colors text-sm font-semibold border border-gold-500/10">Liturgies</button>
+      <button class="px-6 py-2 rounded-full bg-church-card text-gold-500 hover:bg-gold-500/10 transition-colors text-sm font-semibold border border-gold-500/10">Community</button>
+    </div>
+
+    <div class="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+      {% for i in range(1, 13) %}
+      <div class="relative rounded-2xl overflow-hidden group cursor-pointer border border-gold-500/10 shadow-2xl">
+        <div class="aspect-square sm:aspect-auto bg-church-accent/30 flex items-center justify-center min-h-[200px]">
+            <span class="text-gold-500/20 text-4xl">🖼️</span>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-maroon-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+          <div>
+            <p class="text-gold-500 text-xs font-semibold tracking-widest uppercase mb-1">Parish Event {{ i }}</p>
+            <p class="text-white text-sm">Celebration of Faith</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-20 text-center">
+      <button class="px-10 py-4 border-2 border-gold-500/30 text-gold-500 rounded-2xl font-bold hover:bg-gold-500/10 hover:border-gold-500 transition-all">Load More Photos</button>
+    </div>
+  </div>
+</section>
+{% endblock %}

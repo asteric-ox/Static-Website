@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Family Units | Infant Jesus Church, Kallettumkara{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Kudumba Koottayma</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4" data-i18n="nav.family_units">Family Units</h1>
+    <p class="text-lg text-gray-300 font-light">Strengthening the parish community through local fellowship and prayer.</p>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="mb-12">
+      <h2 class="font-heading text-3xl font-bold text-gold-400 mb-6 text-center">Our 25 Family Units</h2>
+      <p class="max-w-3xl mx-auto text-center text-gray-400">The parish is geographically divided into family units to ensure pastoral care and fraternal charity reaches every home. These units meet monthly for prayer, scripture sharing, and community building.</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <!-- Example list of units (placeholder) -->
+      {% for i in range(1, 26) %}
+      <div class="glass-card p-4 rounded-xl border border-gold-500/5 hover:border-gold-500/20 transition-colors group">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gold-600 font-mono tracking-tighter">UNIT #{{ "%02d"|format(i) }}</span>
+          <span class="text-gold-500/30 group-hover:text-gold-500/60 transition-colors">🏠</span>
+        </div>
+        <h3 class="text-white font-medium mt-2">Zone Name {{ i }}</h3>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-20 glass-card p-10 rounded-3xl border border-gold-500/10 max-w-4xl mx-auto text-center">
+        <h3 class="font-heading text-2xl font-bold text-white mb-4">Join Your Unit</h3>
+        <p class="text-gray-400 mb-8">Family units are the basic building blocks of our parish life. If you are new to the parish or unsure which unit you belong to, please contact the parish office.</p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="{{ url_for('contact') }}" class="px-8 py-3 bg-gold-600 text-maroon-900 rounded-xl font-bold hover:bg-gold-500 transition-colors">Contact Office</a>
+        </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

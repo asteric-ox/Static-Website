@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>{% block admin_title %}Dashboard{% endblock %} | Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { maroon:{700:'#800000',900:'#4a0000',950:'#2d0000'}, gold:{400:'#e8be2a',500:'#d4af37',600:'#b08a18',700:'#8a6716',900:'#62451c'}, church:{bg:'#0f0a07',card:'#1a1410',accent:'#2a1f15'} }, fontFamily: { heading:['"Playfair Display"','serif'], body:['Inter','sans-serif'] } }}}
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+  <style>
+    .admin-sidebar a.active { background: rgba(212,175,55,0.1); color: #e8be2a; border-left-color: #d4af37; }
+  </style>
+</head>
+<body class="bg-church-bg font-body text-gray-200 antialiased">
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="hidden md:flex flex-col w-64 bg-church-card border-r border-gold-900/20 p-6">
+    <div class="flex items-center gap-3 mb-10">
+      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-500 to-gold-700 flex items-center justify-center">
+        <span class="text-lg font-heading font-bold text-maroon-900">✝</span>
+      </div>
+      <div>
+        <p class="font-heading text-gold-400 font-semibold text-sm">Admin Panel</p>
+        <p class="text-xs text-gray-500">Infant Jesus Church</p>
+      </div>
+    </div>
+    <nav class="flex-1 space-y-1">
+      <a href="/admin" class="admin-nav-link {% if request.path == '/admin' %}active{% endif %}">
+        <span>📊</span> Dashboard
+      </a>
+      <a href="/admin/mass-timings" class="admin-nav-link {% if 'mass' in request.path %}active{% endif %}">
+        <span>⛪</span> Mass Timings
+      </a>
+      <a href="/admin/announcements" class="admin-nav-link {% if 'announcement' in request.path %}active{% endif %}">
+        <span>📢</span> Announcements
+      </a>
+      <a href="/admin/parish-council" class="admin-nav-link {% if 'council' in request.path %}active{% endif %}">
+        <span>👥</span> Parish Council
+      </a>
+    </nav>
+    <div class="pt-6 border-t border-gold-900/20 space-y-2">
+      <a href="/" class="admin-nav-link"><span>🌐</span> View Website</a>
+      <a href="/admin/logout" class="admin-nav-link text-red-400 hover:text-red-300"><span>🚪</span> Logout</a>
+    </div>
+  </aside>
+
+  <!-- Mobile Header -->
+  <div class="md:hidden fixed top-0 left-0 right-0 z-50 bg-church-card border-b border-gold-900/20 px-4 py-3 flex items-center justify-between">
+    <p class="font-heading text-gold-400 font-semibold text-sm">Admin Panel</p>
+    <div class="flex gap-2">
+      <a href="/" class="text-xs text-gray-400 hover:text-gold-400">Site</a>
+      <a href="/admin/logout" class="text-xs text-red-400 hover:text-red-300">Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 md:p-10 pt-16 md:pt-10 overflow-y-auto">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="mb-6 space-y-2">
+      {% for cat, msg in messages %}
+      <div class="px-4 py-3 rounded-lg text-sm {% if cat == 'success' %}bg-emerald-900/50 text-emerald-300 border border-emerald-800/50{% elif cat == 'danger' %}bg-red-900/50 text-red-300 border border-red-800/50{% else %}bg-sky-900/50 text-sky-300 border border-sky-800/50{% endif %}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    {% block admin_content %}{% endblock %}
+  </main>
+</div>
+
+<style>
+  .admin-nav-link {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.625rem 1rem; border-radius: 0.75rem; border-left: 3px solid transparent;
+    font-size: 0.875rem; font-weight: 500; color: #9ca3af;
+    transition: all 0.2s;
+  }
+  .admin-nav-link:hover { background: rgba(212,175,55,0.05); color: #e8be2a; }
+  .stat-card { background: #1a1410; border: 1px solid rgba(212,175,55,0.1); border-radius: 1rem; padding: 1.5rem; }
+  .admin-input { width:100%; padding:0.75rem 1rem; background:#0f0a07; border:1px solid rgba(212,175,55,0.15); border-radius:0.75rem; color:white; font-size:0.875rem; transition: border-color 0.2s; }
+  .admin-input:focus { outline:none; border-color:rgba(212,175,55,0.4); box-shadow:0 0 0 2px rgba(212,175,55,0.1); }
+  .admin-btn { padding:0.625rem 1.5rem; background:linear-gradient(to right,#b08a18,#8a6716); color:#2d0000; border-radius:0.75rem; font-weight:600; font-size:0.875rem; transition:all 0.2s; }
+  .admin-btn:hover { opacity:0.9; transform:translateY(-1px); }
+  .admin-table { width:100%; text-align:left; font-size:0.875rem; }
+  .admin-table th { padding:0.75rem 1rem; color:#d4af37; font-weight:600; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid rgba(212,175,55,0.15); }
+  .admin-table td { padding:0.75rem 1rem; border-bottom:1px solid rgba(212,175,55,0.05); color:#d1d5db; }
+  .admin-table tr:hover td { background:rgba(212,175,55,0.03); }
+</style>
+</body>
+</html>

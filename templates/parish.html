@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}The Parish | Infant Jesus Church, Kallettumkara{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">Our Sacred Community</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4" data-i18n="nav.parish">Parish</h1>
+    <p class="text-lg text-gray-300 font-light">A spiritual home rooted in faith and community.</p>
+  </div>
+</section>
+
+<!-- Parish Content -->
+<section class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="font-heading text-3xl font-bold text-gold-400 mb-6">A Legacy of Faith</h2>
+        <div class="space-y-4 text-gray-300 leading-relaxed">
+          <p>Infant Jesus Church, Kallettumkara, is a beacon of Syro-Malabar Catholicism. Our parish is not just a building, but a living body of Christ, serving as a sanctuary for thousands of faithful.</p>
+          <p>From the solemnity of the Holy Qurbana to the vibrant community life in our family units, the parish is the heart of our spiritual journey. We are dedicated to nurturing the faith of current and future generations.</p>
+        </div>
+        <div class="mt-10 grid grid-cols-2 gap-6">
+          <div class="glass-card p-6 rounded-xl text-center">
+            <span class="block text-3xl font-bold text-gold-500 mb-1">800+</span>
+            <span class="text-xs text-gray-500 uppercase tracking-widest">Families</span>
+          </div>
+          <div class="glass-card p-6 rounded-xl text-center">
+            <span class="block text-3xl font-bold text-gold-500 mb-1">IJK</span>
+            <span class="text-xs text-gray-500 uppercase tracking-widest">Diocese</span>
+          </div>
+        </div>
+      </div>
+      <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-gold-500/20 group">
+        <img src="/static/images/ASH09186.JPG" alt="Infant Jesus Church Kallettumkara" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+        <div class="absolute inset-0 bg-gradient-to-t from-church-bg/60 to-transparent"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Parish Leadership -->
+<section id="council" class="py-20 px-4 bg-church-card/50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-2">Leadership</p>
+      <h2 class="font-heading text-3xl font-bold text-white">Parish Administration</h2>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for p in council %}
+      <div class="glass-card rounded-2xl p-6 text-center hover:scale-[1.02] transition-transform">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-gold-500 to-gold-700 flex items-center justify-center text-3xl text-maroon-900 font-heading font-bold shadow-lg">
+          {{ p.name[0] }}
+        </div>
+        <h3 class="font-heading text-lg font-semibold text-white">{{ p.name }}</h3>
+        <p class="text-gold-500 text-sm mb-2">{{ p.role }}</p>
+        {% if p.phone %}
+        <a href="tel:{{ p.phone }}" class="text-xs text-gray-400 hover:text-gold-400 transition-colors">{{ p.phone }}</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

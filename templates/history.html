@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}History | Infant Jesus Church, Kallettumkara{% endblock %}
+{% block meta_desc %}Discover the history of Infant Jesus Church, Kallettumkara. A journey of faith and community service.{% endblock %}
+
+{% block content %}
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3" data-i18n="history.title">Our Sacred History</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4">Infant Jesus Church</h1>
+    <p class="text-lg text-gray-300 font-light" data-i18n="history.subtitle">Kallettumkara, Thrissur</p>
+  </div>
+</section>
+
+<section class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div class="animate-fade-in">
+        <h2 class="font-heading text-3xl font-bold text-gold-400 mb-6">A Journey of Faith</h2>
+        <div class="space-y-6 text-gray-300 leading-relaxed">
+          <p>Infant Jesus Church, Kallettumkara, stands as a spiritual beacon in the Diocese of Irinjalakuda. For decades, our parish has been a home for the faithful, nurturing a community built on the teachings of Christ and the traditions of the Syro-Malabar Church.</p>
+          <p>The history of our parish is a testament to the dedication of our ancestors and the guiding light of the Holy Spirit. From its humble beginnings to becoming a vibrant centre of liturgical and social life, the church has remained steadfast in its mission.</p>
+        </div>
+        
+        <div class="mt-10">
+          <a href="/static/docs/parpd38.pdf" class="inline-flex items-center gap-3 px-8 py-4 bg-gold-600 text-maroon-950 rounded-xl font-bold hover:bg-gold-500 transition-all shadow-lg shadow-gold-500/20">
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg>
+            Download Full History (PDF)
+          </a>
+          <p class="text-xs text-gray-500 mt-3 italic">Source: parpd38.pdf</p>
+        </div>
+      </div>
+      <div class="relative group">
+        <div class="absolute -inset-4 bg-gold-500/10 rounded-2xl blur-xl group-hover:bg-gold-500/20 transition-all"></div>
+        <div class="relative glass-card aspect-[4/3] rounded-2xl overflow-hidden border border-gold-500/20 flex items-center justify-center text-8xl opacity-30">
+          ⛪
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline or Key Milestones -->
+<section class="py-20 px-4 bg-church-card/30">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-heading text-3xl font-bold text-center text-white mb-16">Key Milestones</h2>
+    <div class="space-y-12">
+      <div class="glass-card p-8 rounded-2xl border-l-4 border-gold-600">
+        <h3 class="text-xl font-bold text-gold-400 mb-2">Establishment</h3>
+        <p class="text-gray-300">The founding of the parish and the initial construction of the church structure.</p>
+      </div>
+      <div class="glass-card p-8 rounded-2xl border-l-4 border-gold-600">
+        <h3 class="text-xl font-bold text-gold-400 mb-2">Expansion</h3>
+        <p class="text-gray-300">The growth of the community and the subsequent renovations to accommodate the faithful.</p>
+      </div>
+      <div class="glass-card p-8 rounded-2xl border-l-4 border-gold-600">
+        <h3 class="text-xl font-bold text-gold-400 mb-2">Present Day</h3>
+        <p class="text-gray-300">A thriving parish under the Diocese of Irinjalakuda, committed to spiritual and social excellence.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
