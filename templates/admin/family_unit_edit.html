@@ -1,0 +1,153 @@
+{% extends "admin/base_admin.html" %}
+{% block admin_title %}Edit {{ unit.name }}{% endblock %}
+
+{% block admin_content %}
+<div class="flex items-center justify-between mb-8">
+  <div>
+    <a href="/admin/family-units" class="text-gold-500/60 text-sm hover:text-gold-400 transition-colors">← All Units</a>
+    <h1 class="font-heading text-2xl font-bold text-white mt-2">UNIT #{{ "%02d"|format(unit.unit_number) }} – {{ unit.name }}</h1>
+  </div>
+  <div class="flex items-center gap-3">
+    <a href="/admin/family-units/{{ unit._id }}/toggle-photo"
+       class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-colors
+       {% if unit.get('show_photo', true) %}bg-emerald-900/50 text-emerald-400 border border-emerald-800/50 hover:bg-emerald-800/50{% else %}bg-red-900/50 text-red-400 border border-red-800/50 hover:bg-red-800/50{% endif %}">
+      📷 Profile Photos:
+      {% if unit.get('show_photo', true) %}
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span> ON
+      {% else %}
+        <span class="w-2 h-2 rounded-full bg-red-400"></span> OFF
+      {% endif %}
+    </a>
+    <span class="text-sm bg-gold-500/10 text-gold-400 px-3 py-1 rounded-full">{{ unit.families|length }} families</span>
+  </div>
+</div>
+
+<!-- Update Leadership -->
+<div class="stat-card mb-8">
+  <h2 class="font-heading text-lg font-semibold text-gold-400 mb-4">Unit Leadership</h2>
+  <form method="POST" action="/admin/family-units/{{ unit._id }}/update-leadership" enctype="multipart/form-data" class="space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- President -->
+      <div class="space-y-2 p-4 rounded-xl bg-church-bg/50 border border-gold-500/5">
+        <p class="text-gold-500 text-xs font-semibold uppercase tracking-wider">President</p>
+        {% if unit.president.image_url %}
+        <div class="flex justify-center mb-2">
+          <img src="{{ unit.president.image_url }}" class="w-16 h-16 rounded-full object-cover border border-gold-500/20"/>
+        </div>
+        {% endif %}
+        <input type="text" name="president_name" value="{{ unit.president.name }}" class="admin-input" placeholder="Name"/>
+        <input type="text" name="president_phone" value="{{ unit.president.phone }}" class="admin-input" placeholder="Phone"/>
+        <input type="text" name="president_address" value="{{ unit.president.address or '' }}" class="admin-input" placeholder="Address"/>
+        <label class="block text-xs text-gray-500 mt-1">Upload Photo</label>
+        <input type="file" name="president_image" accept="image/*" class="admin-input text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-gold-600/20 file:text-gold-400 file:text-xs file:cursor-pointer"/>
+      </div>
+      <!-- Secretary -->
+      <div class="space-y-2 p-4 rounded-xl bg-church-bg/50 border border-gold-500/5">
+        <p class="text-gold-500 text-xs font-semibold uppercase tracking-wider">Secretary</p>
+        {% if unit.secretary.image_url %}
+        <div class="flex justify-center mb-2">
+          <img src="{{ unit.secretary.image_url }}" class="w-16 h-16 rounded-full object-cover border border-gold-500/20"/>
+        </div>
+        {% endif %}
+        <input type="text" name="secretary_name" value="{{ unit.secretary.name }}" class="admin-input" placeholder="Name"/>
+        <input type="text" name="secretary_phone" value="{{ unit.secretary.phone }}" class="admin-input" placeholder="Phone"/>
+        <input type="text" name="secretary_address" value="{{ unit.secretary.address or '' }}" class="admin-input" placeholder="Address"/>
+        <label class="block text-xs text-gray-500 mt-1">Upload Photo</label>
+        <input type="file" name="secretary_image" accept="image/*" class="admin-input text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-gold-600/20 file:text-gold-400 file:text-xs file:cursor-pointer"/>
+      </div>
+      <!-- Treasurer -->
+      <div class="space-y-2 p-4 rounded-xl bg-church-bg/50 border border-gold-500/5">
+        <p class="text-gold-500 text-xs font-semibold uppercase tracking-wider">Treasurer</p>
+        {% if unit.treasurer.image_url %}
+        <div class="flex justify-center mb-2">
+          <img src="{{ unit.treasurer.image_url }}" class="w-16 h-16 rounded-full object-cover border border-gold-500/20"/>
+        </div>
+        {% endif %}
+        <input type="text" name="treasurer_name" value="{{ unit.treasurer.name }}" class="admin-input" placeholder="Name"/>
+        <input type="text" name="treasurer_phone" value="{{ unit.treasurer.phone }}" class="admin-input" placeholder="Phone"/>
+        <input type="text" name="treasurer_address" value="{{ unit.treasurer.address or '' }}" class="admin-input" placeholder="Address"/>
+        <label class="block text-xs text-gray-500 mt-1">Upload Photo</label>
+        <input type="file" name="treasurer_image" accept="image/*" class="admin-input text-xs file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:bg-gold-600/20 file:text-gold-400 file:text-xs file:cursor-pointer"/>
+      </div>
+    </div>
+    <button type="submit" class="admin-btn">Update Leadership</button>
+  </form>
+</div>
+
+<!-- Add Family -->
+<div class="stat-card mb-8">
+  <h2 class="font-heading text-lg font-semibold text-gold-400 mb-4">Add Family</h2>
+  <form method="POST" action="/admin/family-units/{{ unit._id }}/add-family" enctype="multipart/form-data" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 items-end">
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Name *</label>
+      <input type="text" name="name" class="admin-input" placeholder="Family head name" required/>
+    </div>
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Phone</label>
+      <input type="text" name="phone" class="admin-input" placeholder="+91 ..."/>
+    </div>
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Address</label>
+      <input type="text" name="address" class="admin-input" placeholder="House, Place"/>
+    </div>
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Email</label>
+      <input type="email" name="email" class="admin-input" placeholder="email@..."/>
+    </div>
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Photo</label>
+      <input type="file" name="image_file" accept="image/*" class="admin-input text-xs file:mr-2 file:py-1 file:px-2 file:rounded-lg file:border-0 file:bg-gold-600/20 file:text-gold-400 file:text-xs file:cursor-pointer"/>
+    </div>
+    <div>
+      <button type="submit" class="admin-btn w-full">Add</button>
+    </div>
+  </form>
+</div>
+
+<!-- Families Table -->
+<div class="stat-card overflow-x-auto">
+  <h2 class="font-heading text-lg font-semibold text-gold-400 mb-4">Families ({{ unit.families|length }})</h2>
+  {% if unit.families|length > 0 %}
+  <table class="admin-table">
+    <thead>
+      <tr><th>#</th><th>Photo</th><th>Name</th><th>Phone</th><th>Address</th><th>Visible</th><th>Actions</th></tr>
+    </thead>
+    <tbody>
+      {% for f in unit.families %}
+      <tr class="{% if not f.get('visible', true) %}opacity-40{% endif %}">
+        <td class="text-gold-600 font-mono text-xs">{{ loop.index }}</td>
+        <td>
+          {% if f.image_url %}
+          <img src="{{ f.image_url }}" class="w-10 h-10 rounded-full object-cover border border-gold-500/10"/>
+          {% else %}
+          <div class="w-10 h-10 rounded-full bg-church-accent flex items-center justify-center">
+            <span class="text-xs text-gray-500">—</span>
+          </div>
+          {% endif %}
+        </td>
+        <td class="font-medium text-white">{{ f.name }}</td>
+        <td class="text-sm">{{ f.phone or '—' }}</td>
+        <td class="text-sm text-gray-400 max-w-[200px] truncate">{{ f.address or '—' }}</td>
+        <td>
+          <a href="/admin/family-units/{{ unit._id }}/toggle-family/{{ loop.index0 }}"
+             class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-colors
+             {% if f.get('visible', true) %}bg-emerald-900/50 text-emerald-400 border border-emerald-800/50 hover:bg-emerald-800/50{% else %}bg-red-900/50 text-red-400 border border-red-800/50 hover:bg-red-800/50{% endif %}">
+            {% if f.get('visible', true) %}
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span> ON
+            {% else %}
+              <span class="w-2 h-2 rounded-full bg-red-400"></span> OFF
+            {% endif %}
+          </a>
+        </td>
+        <td>
+          <a href="/admin/family-units/{{ unit._id }}/delete-family/{{ loop.index0 }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Remove this family?')">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="text-gray-500 text-center py-6">No families added yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

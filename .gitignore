@@ -1,5 +1,28 @@
-__pycache__/
-*.pyc
-.env
-church.db
 instance/
+.webassets-cache
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+python-venv/
+
+# Database
+church.db
+*.db
+*.sqlite
+
+# Pycache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Static uploads
+static/uploads/*
+!static/uploads/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db

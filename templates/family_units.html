@@ -19,15 +19,19 @@
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <!-- Example list of units (placeholder) -->
-      {% for i in range(1, 26) %}
-      <div class="glass-card p-4 rounded-xl border border-gold-500/5 hover:border-gold-500/20 transition-colors group">
+      {% for unit in units %}
+      <a href="{{ url_for('family_unit_detail', unit_id=unit._id) }}"
+         class="glass-card p-5 rounded-xl border border-gold-500/5 hover:border-gold-500/20 transition-all group hover:scale-[1.02] cursor-pointer block">
         <div class="flex items-center justify-between">
-          <span class="text-xs text-gold-600 font-mono tracking-tighter">UNIT #{{ "%02d"|format(i) }}</span>
+          <span class="text-xs text-gold-600 font-mono tracking-tighter">UNIT #{{ "%02d"|format(unit.unit_number) }}</span>
           <span class="text-gold-500/30 group-hover:text-gold-500/60 transition-colors">🏠</span>
         </div>
-        <h3 class="text-white font-medium mt-2">Zone Name {{ i }}</h3>
-      </div>
+        <h3 class="text-white font-medium mt-2">{{ unit.name }}</h3>
+        <div class="flex items-center justify-between mt-3">
+          <p class="text-xs text-gray-500">View details →</p>
+          <span class="text-xs bg-gold-500/10 text-gold-400 px-2 py-0.5 rounded-full font-semibold">{{ unit.families|length }} families</span>
+        </div>
+      </a>
       {% endfor %}
     </div>
 

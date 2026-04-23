@@ -4,15 +4,22 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ── Preloader ────────────────────────────────────────────────
+    // ── Preloader (only on first visit per session) ────────────────
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                preloader.classList.add('fade-out');
-                setTimeout(() => preloader.remove(), 1000);
-            }, 2000); // 2-second delay to show the intro animation
-        });
+        if (sessionStorage.getItem('intro_shown')) {
+            // Already seen in this session — remove immediately
+            preloader.remove();
+        } else {
+            // First visit — show the intro animation
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.classList.add('fade-out');
+                    setTimeout(() => preloader.remove(), 1000);
+                    sessionStorage.setItem('intro_shown', 'true');
+                }, 2000);
+            });
+        }
     }
 
     // ── Navigation ────────────────────────────────────────────────

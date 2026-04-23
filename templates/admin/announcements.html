@@ -44,7 +44,7 @@
         <td class="font-medium text-white">{{ a.title }}</td>
         <td class="text-sm">{{ a.date.strftime('%b %d, %Y') if a.date else '—' }}</td>
         <td class="text-sm">{{ a.expiry.strftime('%b %d, %Y') if a.expiry else '—' }}</td>
-        <td><a href="/admin/announcements/delete/{{ a.id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Delete this announcement?')">Delete</a></td>
+        <td><a href="/admin/announcements/delete/{{ a._id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Delete this announcement?')">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>

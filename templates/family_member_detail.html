@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}{{ member.name }} – {{ unit.name }} | Infant Jesus Church{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<section class="relative pt-32 pb-20 px-4 overflow-hidden">
+  <div class="parallax-bg absolute inset-0"></div>
+  <div class="relative z-10 max-w-4xl mx-auto text-center">
+    <a href="{{ url_for('family_unit_detail', unit_id=unit._id) }}" class="inline-flex items-center gap-2 text-gold-500/60 text-sm hover:text-gold-400 transition-colors mb-6">
+      ← Back to {{ unit.name }}
+    </a>
+    <p class="text-gold-500 text-sm font-semibold tracking-widest uppercase mb-3">{{ unit.name }} – UNIT #{{ "%02d"|format(unit.unit_number) }}</p>
+    <h1 class="font-heading text-4xl sm:text-5xl font-bold text-white mb-4">Family Details</h1>
+  </div>
+</section>
+
+<!-- Member Full Details -->
+<section class="py-16 px-4">
+  <div class="max-w-3xl mx-auto">
+    <div class="glass-card rounded-3xl border border-gold-500/10 overflow-hidden">
+      <!-- Photo & Name Header -->
+      <div class="p-8 sm:p-10 flex flex-col sm:flex-row items-center gap-6 border-b border-gold-500/10">
+        <div class="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gradient-to-br from-gold-500/20 to-gold-700/20 flex items-center justify-center overflow-hidden flex-shrink-0 border-2 border-gold-500/20 shadow-lg">
+          {% if member.image_url %}
+            <img src="{{ member.image_url }}" alt="{{ member.name }}" class="w-full h-full object-cover"/>
+          {% else %}
+            <span class="text-5xl text-gold-500/30 font-heading font-bold">{{ member.name[0] if member.name else '?' }}</span>
+          {% endif %}
+        </div>
+        <div class="text-center sm:text-left">
+          <h2 class="font-heading text-3xl font-bold text-white">{{ member.name }}</h2>
+          {% if member.phone %}
+          <a href="tel:{{ member.phone }}" class="inline-flex items-center gap-2 mt-2 text-gold-400 hover:text-gold-300 transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            {{ member.phone }}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Details -->
+      <div class="p-8 sm:p-10 space-y-6">
+        {% if member.address %}
+        <div class="flex gap-4">
+          <div class="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-500 flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          </div>
+          <div>
+            <p class="text-xs text-gold-600 font-semibold uppercase tracking-wider mb-1">Address</p>
+            <p class="text-gray-300 leading-relaxed">{{ member.address }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if member.phone %}
+        <div class="flex gap-4">
+          <div class="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-500 flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          </div>
+          <div>
+            <p class="text-xs text-gold-600 font-semibold uppercase tracking-wider mb-1">Phone</p>
+            <p class="text-gray-300">{{ member.phone }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if member.email %}
+        <div class="flex gap-4">
+          <div class="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center text-gold-500 flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <p class="text-xs text-gold-600 font-semibold uppercase tracking-wider mb-1">Email</p>
+            <p class="text-gray-300">{{ member.email }}</p>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if not member.address and not member.phone and not member.email %}
+        <p class="text-gray-500 text-center py-4">No additional details available.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

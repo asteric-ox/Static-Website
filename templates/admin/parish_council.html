@@ -44,7 +44,7 @@
         <td class="font-medium text-white">{{ m.name }}</td>
         <td class="text-gold-400">{{ m.role }}</td>
         <td>{{ m.phone or '—' }}</td>
-        <td><a href="/admin/parish-council/delete/{{ m.id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Remove this member?')">Delete</a></td>
+        <td><a href="/admin/parish-council/delete/{{ m._id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Remove this member?')">Delete</a></td>
       </tr>
       {% endfor %}
     </tbody>
