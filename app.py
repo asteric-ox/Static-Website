@@ -33,6 +33,7 @@ uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017/kallettumkara_churc
 app.config["MONGO_URI"] = uri
 
 # Ensure we have a database name and SSL settings if missing
+# Ensure we have a database name and SSL settings if missing
 if "mongodb.net/" in uri:
     if "/?" in uri:
         uri = uri.replace("mongodb.net/?", "mongodb.net/church_db?")
@@ -43,19 +44,10 @@ if "mongodb.net/" in uri:
 
 mongo = PyMongo(app)
 
-
 # ── Helpers ─────────────────────────────────────────────────────────
-class JSONEncoder(json.JSONEncoder):
-    """Custom encoder for ObjectId and datetime."""
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        if isinstance(o, datetime):
-            return o.isoformat()
-        return super().default(o)
-
-app.json_encoder = JSONEncoder
-
+@app.template_filter('tojson_pretty')
+def tojson_pretty(v):
+    return json.dumps(v, indent=2, default=str)
 
 def login_required(f):
     """Decorator to protect admin routes."""
@@ -544,8 +536,19 @@ def admin_delete_family(unit_id, index):
 
 
 # ── Boot ────────────────────────────────────────────────────────────
-with app.app_context():
-    seed_database()
-
+# ── Boot ────────────────────────────────────────────────────────────
 if __name__ == "__main__":
+    # Local run
+    with app.app_context():
+        try:
+            seed_database()
+        except Exception as e:
+            print(f"Seeding skipped: {e}")
     app.run(debug=True, port=5000)
+else:
+    # Production run (Render)
+    with app.app_context():
+        try:
+            seed_database()
+        except Exception as e:
+            print(f"Startup seeding skipped/failed: {e}")
