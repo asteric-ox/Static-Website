@@ -32,13 +32,16 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017/kallettumkara_church")
 app.config["MONGO_URI"] = uri
 
-# Ensure we have a database name even if the user forgot it in the URI
-if "mongodb.net/" in uri and "/?" in uri:
-    # If the URI looks like ...mongodb.net/?... it's missing the DB name
-    uri = uri.replace("mongodb.net/?", "mongodb.net/church_db?")
+# Ensure we have a database name and SSL settings if missing
+if "mongodb.net/" in uri:
+    if "/?" in uri:
+        uri = uri.replace("mongodb.net/?", "mongodb.net/church_db?")
+    if "tls=" not in uri.lower():
+        separator = "&" if "?" in uri else "?"
+        uri += f"{separator}tls=true&tlsAllowInvalidCertificates=true"
     app.config["MONGO_URI"] = uri
 
-mongo = PyMongo(app, tls=True, tlsAllowInvalidCertificates=True)
+mongo = PyMongo(app)
 
 
 # ── Helpers ─────────────────────────────────────────────────────────
