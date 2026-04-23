@@ -20,7 +20,15 @@ app.secret_key = os.environ.get("SECRET_KEY", "kallettumkara-church-secret-2026"
 
 # SQLite Configuration
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "church.db")
+
+# Railway persistent volume support
+volume_path = os.environ.get("RAILWAY_VOLUME_MOUNT_PATH")
+if volume_path:
+    db_path = os.path.join(volume_path, "church.db")
+else:
+    db_path = os.path.join(basedir, "church.db")
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///" + db_path)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)

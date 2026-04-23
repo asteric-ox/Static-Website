@@ -1,13 +1,5 @@
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
 .env
-.venv
-venv/
-ENV/
+church.db
 instance/
-.pytest_cache/
-.vscode/
-.idea/
-*.db
-.DS_Store
