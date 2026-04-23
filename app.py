@@ -29,9 +29,15 @@ app.config["MAX_CONTENT_LENGTH"] = 5 * 1024 * 1024  # 5 MB max
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # MongoDB Configuration
-app.config["MONGO_URI"] = os.environ.get(
-    "MONGO_URI", "mongodb://localhost:27017/kallettumkara_church"
-)
+uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017/kallettumkara_church")
+app.config["MONGO_URI"] = uri
+
+# Ensure we have a database name even if the user forgot it in the URI
+if "mongodb.net/" in uri and "/?" in uri:
+    # If the URI looks like ...mongodb.net/?... it's missing the DB name
+    uri = uri.replace("mongodb.net/?", "mongodb.net/church_db?")
+    app.config["MONGO_URI"] = uri
+
 mongo = PyMongo(app)
 
 
@@ -169,6 +175,9 @@ def seed_database():
 @app.route("/")
 def home():
     """Home page with announcements marquee & daily mass widget."""
+    if mongo.db is None:
+        return "Database not connected. Please check your MONGO_URI environment variable on Render.", 500
+
     today_name = datetime.utcnow().strftime("%A")
     daily_masses = list(mongo.db.mass_timings.find({"day": today_name}))
     sunday_masses = list(mongo.db.mass_timings.find({"category": "Sunday"}))
