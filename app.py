@@ -38,7 +38,7 @@ if "mongodb.net/" in uri and "/?" in uri:
     uri = uri.replace("mongodb.net/?", "mongodb.net/church_db?")
     app.config["MONGO_URI"] = uri
 
-mongo = PyMongo(app)
+mongo = PyMongo(app, tls=True, tlsAllowInvalidCertificates=True)
 
 
 # ── Helpers ─────────────────────────────────────────────────────────
