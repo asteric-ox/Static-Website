@@ -75,6 +75,10 @@ def save_upload(file_field):
 
 def seed_database():
     """Seed initial data if collections are empty."""
+    if mongo.db is None:
+        print("Error: mongo.db is None. Check your MONGO_URI (ensure it includes a database name).")
+        return
+
     # --- Admin user ---
     if mongo.db.admins.count_documents({}) == 0:
         mongo.db.admins.insert_one({
