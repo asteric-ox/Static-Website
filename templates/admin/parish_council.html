@@ -9,7 +9,7 @@
 <!-- Add Form -->
 <div class="stat-card mb-8">
   <h2 class="font-heading text-lg font-semibold text-gold-400 mb-4">Add Council Member</h2>
-  <form method="POST" action="/admin/parish-council/add" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+  <form method="POST" action="/admin/parish-council/add" enctype="multipart/form-data" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
     <div>
       <label class="block text-xs text-gray-400 mb-1">Name</label>
       <input type="text" name="name" class="admin-input" placeholder="Full Name" required/>
@@ -19,14 +19,30 @@
       <input type="text" name="role" class="admin-input" placeholder="e.g. Trustee" required/>
     </div>
     <div>
-      <label class="block text-xs text-gray-400 mb-1">Image URL</label>
-      <input type="text" name="image_url" class="admin-input" placeholder="/static/images/..."/>
+      <label class="block text-xs text-gray-400 mb-1">Photo</label>
+      <input type="file" name="image_file" class="admin-input"/>
     </div>
     <div>
       <label class="block text-xs text-gray-400 mb-1">Phone</label>
       <input type="text" name="phone" class="admin-input" placeholder="+91 ..."/>
     </div>
-    <div>
+    <div class="lg:col-span-1">
+      <label class="block text-xs text-gray-400 mb-1">DOB</label>
+      <input type="text" name="dob" class="admin-input" placeholder="DD.MM.YYYY"/>
+    </div>
+    <div class="lg:col-span-1">
+      <label class="block text-xs text-gray-400 mb-1">Feast Day</label>
+      <input type="text" name="feast_day" class="admin-input" placeholder="e.g. Jan 20"/>
+    </div>
+    <div class="lg:col-span-1">
+      <label class="block text-xs text-gray-400 mb-1">Normal Mass</label>
+      <input type="text" name="normal_mass_time" class="admin-input" placeholder="e.g. 6:30 AM"/>
+    </div>
+    <div class="lg:col-span-1">
+      <label class="block text-xs text-gray-400 mb-1">Special Mass</label>
+      <input type="text" name="special_mass_time" class="admin-input" placeholder="e.g. 10:00 AM"/>
+    </div>
+    <div class="lg:col-span-1">
       <button type="submit" class="admin-btn w-full">Add Member</button>
     </div>
   </form>
@@ -44,7 +60,10 @@
         <td class="font-medium text-white">{{ m.name }}</td>
         <td class="text-gold-400">{{ m.role }}</td>
         <td>{{ m.phone or '—' }}</td>
-        <td><a href="/admin/parish-council/delete/{{ m._id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Remove this member?')">Delete</a></td>
+        <td>
+          <a href="/admin/parish-council/edit/{{ m._id }}" class="text-gold-400 text-xs hover:text-gold-300 mr-3">Edit</a>
+          <a href="/admin/parish-council/delete/{{ m._id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Remove this member?')">Delete</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

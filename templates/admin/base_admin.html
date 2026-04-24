@@ -18,8 +18,8 @@
   <!-- Sidebar -->
   <aside class="hidden md:flex flex-col w-64 bg-church-card border-r border-gold-900/20 p-6">
     <div class="flex items-center gap-3 mb-10">
-      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gold-500 to-gold-700 flex items-center justify-center">
-        <span class="text-lg font-heading font-bold text-maroon-900">✝</span>
+      <div class="w-10 h-10 rounded-full overflow-hidden shadow-lg">
+        <img src="/static/images/Infant.png" alt="Infant Jesus Logo" class="w-full h-full object-cover"/>
       </div>
       <div>
         <p class="font-heading text-gold-400 font-semibold text-sm">Admin Panel</p>
@@ -39,8 +39,14 @@
       <a href="/admin/parish-council" class="admin-nav-link {% if 'council' in request.path %}active{% endif %}">
         <span>👥</span> Parish Council
       </a>
+      <a href="/admin/trustees" class="admin-nav-link {% if 'trustees' in request.path %}active{% endif %}">
+        <span>🤝</span> Trustees
+      </a>
       <a href="/admin/family-units" class="admin-nav-link {% if 'family' in request.path %}active{% endif %}">
         <span>🏠</span> Family Units
+      </a>
+      <a href="/admin/settings" class="admin-nav-link {% if 'settings' in request.path %}active{% endif %}">
+        <span>⚙️</span> Settings
       </a>
     </nav>
     <div class="pt-6 border-t border-gold-900/20 space-y-2">

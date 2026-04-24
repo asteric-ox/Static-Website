@@ -164,7 +164,31 @@
   pointer-events: none;
 }
 
+/* ── Priest Cards ──────────────────────────────────────────── */
+.priest-card {
+  width: 280px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.priest-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(212,175,55,0.1);
+  border-color: rgba(212,175,55,0.25);
+}
+
 /* ── Responsive Helpers ────────────────────────────────────── */
 @media (max-width: 768px) {
   .font-heading { word-break: break-word; }
+  .priest-card { width: 100%; max-width: 320px; }
 }
+
+/* ── Trustee Cards ────────────────────────────────────────── */
+.trustee-card {
+  width: 240px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.trustee-card:hover {
+  transform: translateY(-5px) rotate(1deg);
+  box-shadow: 0 15px 35px rgba(212,175,55,0.1);
+  border-color: rgba(212,175,55,0.3);
+}
+

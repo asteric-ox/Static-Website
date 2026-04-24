@@ -33,7 +33,6 @@ uri = os.environ.get("MONGO_URI", "mongodb://localhost:27017/kallettumkara_churc
 app.config["MONGO_URI"] = uri
 
 # Ensure we have a database name and SSL settings if missing
-# Ensure we have a database name and SSL settings if missing
 if "mongodb.net/" in uri:
     if "/?" in uri:
         uri = uri.replace("mongodb.net/?", "mongodb.net/church_db?")
@@ -44,10 +43,19 @@ if "mongodb.net/" in uri:
 
 mongo = PyMongo(app)
 
+
 # ── Helpers ─────────────────────────────────────────────────────────
-@app.template_filter('tojson_pretty')
-def tojson_pretty(v):
-    return json.dumps(v, indent=2, default=str)
+class JSONEncoder(json.JSONEncoder):
+    """Custom encoder for ObjectId and datetime."""
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        if isinstance(o, datetime):
+            return o.isoformat()
+        return super().default(o)
+
+app.json_encoder = JSONEncoder
+
 
 def login_required(f):
     """Decorator to protect admin routes."""
@@ -91,16 +99,22 @@ def seed_database():
     # --- Mass Timings ---
     if mongo.db.mass_timings.count_documents({}) == 0:
         timings = [
-            {"day": "Monday",    "time": "06:30 AM", "description": "Holy Qurbana (Syro-Malabar Rite)", "category": "Weekday"},
-            {"day": "Tuesday",   "time": "06:30 AM", "description": "Holy Qurbana", "category": "Weekday"},
-            {"day": "Wednesday", "time": "06:30 AM", "description": "Holy Qurbana & Novena", "category": "Weekday"},
-            {"day": "Thursday",  "time": "06:30 AM", "description": "Holy Qurbana", "category": "Weekday"},
-            {"day": "Friday",    "time": "06:30 AM", "description": "Holy Qurbana & Way of the Cross", "category": "Weekday"},
-            {"day": "Saturday",  "time": "06:30 AM", "description": "Holy Qurbana", "category": "Weekday"},
-            {"day": "Sunday",    "time": "06:00 AM", "description": "First Holy Qurbana", "category": "Sunday"},
-            {"day": "Sunday",    "time": "08:00 AM", "description": "Second Holy Qurbana (Main)", "category": "Sunday"},
+            {"day": "Monday",    "time": "06:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Monday",    "time": "07:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Tuesday",   "time": "06:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Tuesday",   "time": "07:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Wednesday", "time": "06:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Wednesday", "time": "05:00 PM", "description": "Holy Qurbana & Novena", "category": "Weekday"},
+            {"day": "Thursday",  "time": "06:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Thursday",  "time": "07:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Friday",    "time": "06:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Friday",    "time": "07:00 AM", "description": "Holy Qurbana & Way of the Cross", "category": "Weekday"},
+            {"day": "Saturday",  "time": "06:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Saturday",  "time": "07:00 AM", "description": "Holy Qurbana", "category": "Weekday"},
+            {"day": "Sunday",    "time": "05:45 AM", "description": "First Holy Qurbana", "category": "Sunday"},
+            {"day": "Sunday",    "time": "07:00 AM", "description": "Second Holy Qurbana", "category": "Sunday"},
             {"day": "Sunday",    "time": "10:00 AM", "description": "Third Holy Qurbana", "category": "Sunday"},
-            {"day": "Sunday",    "time": "05:00 PM", "description": "Evening Holy Qurbana & Catechism", "category": "Sunday"},
+            {"day": "Sunday",    "time": "06:00 AM", "description": "Fourth Holy Qurbana", "category": "Sunday"},
         ]
         mongo.db.mass_timings.insert_many(timings)
 
@@ -134,14 +148,50 @@ def seed_database():
     # --- Parish Council ---
     if mongo.db.parish_council.count_documents({}) == 0:
         members = [
-            {"name": "Rev. Fr. Jose Pallikkunnu", "role": "Parish Priest", "image_url": "/static/images/vicar.jpg", "phone": "+91 79091 51122"},
-            {"name": "Rev. Fr. Paul Antony",      "role": "Assistant Vicar", "image_url": "/static/images/assistant.jpg", "phone": "+91 480 2881 002"},
+            {
+                "name": "Fr. Dr. Sebastian Panjikkaran", 
+                "role": "Vicar", 
+                "image_url": "/static/images/panji.jpg", 
+                "phone": "+91 85477 75750",
+                "dob": "14.05.1959",
+                "feast_day": "January 20",
+                "normal_mass_time": "6:30 AM",
+                "special_mass_time": ""
+            },
+            {
+                "name": "Fr. Jeril James", 
+                "role": "Assistant Vicar", 
+                "image_url": "/static/images/jeril.jpg", 
+                "phone": "+91 73069 57966",
+                "dob": "20.03.1996",
+                "feast_day": "—",
+                "normal_mass_time": "6:30 AM",
+                "special_mass_time": ""
+            },
         ]
         mongo.db.parish_council.insert_many(members)
 
     # --- Prayer Requests ---
     if mongo.db.prayer_requests.count_documents({}) == 0:
         mongo.db.prayer_requests.create_index("created_at")
+
+    # --- Site Settings ---
+    if mongo.db.site_settings.count_documents({}) == 0:
+        mongo.db.site_settings.insert_one({
+            "key": "general",
+            "maintenance_mode": False,
+            "maintenance_message": "",
+            "updated_at": datetime.utcnow()
+        })
+
+    # --- Trustees ---
+    if mongo.db.trustees.count_documents({}) == 0:
+        trustee_data = [
+            {"name": "Trustee 1", "role": "Trustee", "image_url": "", "phone": "", "dob": "", "feast_day": "", "installation_date": ""},
+            {"name": "Trustee 2", "role": "Trustee", "image_url": "", "phone": "", "dob": "", "feast_day": "", "installation_date": ""},
+            {"name": "Trustee 3", "role": "Trustee", "image_url": "", "phone": "", "dob": "", "feast_day": "", "installation_date": ""},
+        ]
+        mongo.db.trustees.insert_many(trustee_data)
 
     # --- Family Units ---
     if mongo.db.family_units.count_documents({}) == 0:
@@ -166,6 +216,37 @@ def seed_database():
         mongo.db.family_units.insert_many(units)
 
 
+# ── Maintenance Mode Middleware ─────────────────────────────────────
+def get_site_settings():
+    """Retrieve site settings from the database."""
+    if mongo.db is None:
+        return {"maintenance_mode": False, "maintenance_message": ""}
+    settings = mongo.db.site_settings.find_one({"key": "general"})
+    return settings or {"maintenance_mode": False, "maintenance_message": ""}
+
+
+@app.context_processor
+def inject_site_settings():
+    """Make site_settings available in all templates."""
+    return {"site_settings": get_site_settings()}
+
+
+@app.before_request
+def check_maintenance_mode():
+    """Block public routes when maintenance mode is active."""
+    # Always allow: admin routes, static files, login
+    allowed_prefixes = ("/admin", "/static")
+    if request.path.startswith(allowed_prefixes):
+        return None
+
+    settings = get_site_settings()
+    if settings.get("maintenance_mode", False):
+        return render_template(
+            "maintenance.html",
+            maintenance_message=settings.get("maintenance_message", "")
+        ), 503
+
+
 # ── Public Routes ───────────────────────────────────────────────────
 @app.route("/")
 def home():
@@ -182,12 +263,17 @@ def home():
         .limit(10)
     )
     parish_council = list(mongo.db.parish_council.find().limit(6))
+    trustees = list(mongo.db.trustees.find())
+    all_timings = list(mongo.db.mass_timings.find().sort([("day", 1), ("time", 1)]))
+    
     return render_template(
         "index.html",
         daily_masses=daily_masses,
         sunday_masses=sunday_masses,
         announcements=announcements,
         parish_council=parish_council,
+        trustees=trustees,
+        all_timings=all_timings,
         today=today_name,
     )
 
@@ -353,6 +439,27 @@ def admin_add_mass():
     return redirect(url_for("admin_mass_timings"))
 
 
+@app.route("/admin/mass-timings/edit/<id>", methods=["GET", "POST"])
+@login_required
+def admin_edit_mass(id):
+    timing = mongo.db.mass_timings.find_one({"_id": ObjectId(id)})
+    if not timing:
+        abort(404)
+    if request.method == "POST":
+        mongo.db.mass_timings.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {
+                "day": request.form["day"],
+                "time": request.form["time"],
+                "description": request.form["description"],
+                "category": request.form["category"],
+            }}
+        )
+        flash("Mass timing updated.", "success")
+        return redirect(url_for("admin_mass_timings"))
+    return render_template("admin/mass_timings_edit.html", timing=timing)
+
+
 @app.route("/admin/mass-timings/delete/<id>")
 @login_required
 def admin_delete_mass(id):
@@ -402,13 +509,54 @@ def admin_parish_council():
 @app.route("/admin/parish-council/add", methods=["POST"])
 @login_required
 def admin_add_council():
+    image_url = save_upload("image_file") or request.form.get("image_url", "")
     mongo.db.parish_council.insert_one({
         "name": request.form["name"],
         "role": request.form["role"],
-        "image_url": request.form.get("image_url", ""),
+        "image_url": image_url,
         "phone": request.form.get("phone", ""),
+        "dob": request.form.get("dob", ""),
+        "feast_day": request.form.get("feast_day", ""),
+        "normal_mass_time": request.form.get("normal_mass_time", ""),
+        "special_mass_time": request.form.get("special_mass_time", ""),
     })
     flash("Council member added.", "success")
+    return redirect(url_for("admin_parish_council"))
+
+
+@app.route("/admin/parish-council/edit/<id>", methods=["GET", "POST"])
+@login_required
+def admin_edit_council(id):
+    member = mongo.db.parish_council.find_one({"_id": ObjectId(id)})
+    if not member:
+        abort(404)
+    
+    if request.method == "POST":
+        image_url = save_upload("image_file") or request.form.get("image_url") or member.get("image_url", "")
+        mongo.db.parish_council.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {
+                "name": request.form["name"],
+                "role": request.form["role"],
+                "image_url": image_url,
+                "phone": request.form.get("phone", ""),
+                "dob": request.form.get("dob", ""),
+                "feast_day": request.form.get("feast_day", ""),
+                "normal_mass_time": request.form.get("normal_mass_time", ""),
+                "special_mass_time": request.form.get("special_mass_time", ""),
+            }}
+        )
+        flash("Council member updated.", "success")
+        return redirect(url_for("admin_parish_council"))
+    
+    return render_template("admin/parish_council_edit.html", member=member)
+
+
+@app.route("/admin/parish-council/delete/<id>")
+@login_required
+def admin_delete_council(id):
+    mongo.db.parish_council.delete_one({"_id": ObjectId(id)})
+    flash("Council member removed.", "success")
     return redirect(url_for("admin_parish_council"))
 
 
@@ -535,20 +683,104 @@ def admin_delete_family(unit_id, index):
     return redirect(url_for("admin_family_unit_edit", unit_id=unit_id))
 
 
+# ── Admin: Site Settings ───────────────────────────────────────────
+@app.route("/admin/settings")
+@login_required
+def admin_settings():
+    settings = get_site_settings()
+    return render_template("admin/settings.html", settings=settings)
+
+
+@app.route("/admin/settings/toggle-maintenance", methods=["POST"])
+@login_required
+def admin_toggle_maintenance():
+    """Toggle maintenance mode on/off."""
+    is_enabled = "maintenance_mode" in request.form
+    mongo.db.site_settings.update_one(
+        {"key": "general"},
+        {"$set": {"maintenance_mode": is_enabled, "updated_at": datetime.utcnow()}},
+        upsert=True
+    )
+    status = "ENABLED" if is_enabled else "DISABLED"
+    flash(f"Maintenance mode {status}.", "success")
+    return redirect(url_for("admin_settings"))
+
+
+@app.route("/admin/settings/update-maintenance-message", methods=["POST"])
+@login_required
+def admin_update_maintenance_message():
+    """Update the custom maintenance message."""
+    message = request.form.get("maintenance_message", "").strip()
+    mongo.db.site_settings.update_one(
+        {"key": "general"},
+        {"$set": {"maintenance_message": message, "updated_at": datetime.utcnow()}},
+        upsert=True
+    )
+    flash("Maintenance message updated.", "success")
+    return redirect(url_for("admin_settings"))
+
+
+# ── Admin CRUD: Trustees ──────────────────────────────────────────
+@app.route("/admin/trustees")
+@login_required
+def admin_trustees():
+    items = list(mongo.db.trustees.find())
+    return render_template("admin/trustees.html", items=items)
+
+
+@app.route("/admin/trustees/add", methods=["POST"])
+@login_required
+def admin_add_trustee():
+    image_url = save_upload("image_file") or request.form.get("image_url", "")
+    mongo.db.trustees.insert_one({
+        "name": request.form["name"],
+        "role": request.form["role"],
+        "image_url": image_url,
+        "phone": request.form.get("phone", ""),
+        "dob": request.form.get("dob", ""),
+        "feast_day": request.form.get("feast_day", ""),
+        "installation_date": request.form.get("installation_date", ""),
+    })
+    flash("Trustee added.", "success")
+    return redirect(url_for("admin_trustees"))
+
+
+@app.route("/admin/trustees/edit/<id>", methods=["GET", "POST"])
+@login_required
+def admin_edit_trustee(id):
+    item = mongo.db.trustees.find_one({"_id": ObjectId(id)})
+    if not item:
+        abort(404)
+    if request.method == "POST":
+        image_url = save_upload("image_file") or request.form.get("image_url") or item.get("image_url", "")
+        mongo.db.trustees.update_one(
+            {"_id": ObjectId(id)},
+            {"$set": {
+                "name": request.form["name"],
+                "role": request.form["role"],
+                "image_url": image_url,
+                "phone": request.form.get("phone", ""),
+                "dob": request.form.get("dob", ""),
+                "feast_day": request.form.get("feast_day", ""),
+                "installation_date": request.form.get("installation_date", ""),
+            }}
+        )
+        flash("Trustee updated.", "success")
+        return redirect(url_for("admin_trustees"))
+    return render_template("admin/trustees_edit.html", item=item)
+
+
+@app.route("/admin/trustees/delete/<id>")
+@login_required
+def admin_delete_trustee(id):
+    mongo.db.trustees.delete_one({"_id": ObjectId(id)})
+    flash("Trustee removed.", "success")
+    return redirect(url_for("admin_trustees"))
+
+
 # ── Boot ────────────────────────────────────────────────────────────
-# ── Boot ────────────────────────────────────────────────────────────
+with app.app_context():
+    seed_database()
+
 if __name__ == "__main__":
-    # Local run
-    with app.app_context():
-        try:
-            seed_database()
-        except Exception as e:
-            print(f"Seeding skipped: {e}")
     app.run(debug=True, port=5000)
-else:
-    # Production run (Render)
-    with app.app_context():
-        try:
-            seed_database()
-        except Exception as e:
-            print(f"Startup seeding skipped/failed: {e}")

@@ -54,7 +54,10 @@
         <td class="text-gold-400 font-heading font-semibold">{{ t.time }}</td>
         <td>{{ t.description }}</td>
         <td><span class="px-2 py-0.5 rounded-full text-xs {% if t.category == 'Sunday' %}bg-gold-500/10 text-gold-400{% else %}bg-gray-700/50 text-gray-400{% endif %}">{{ t.category }}</span></td>
-        <td><a href="/admin/mass-timings/delete/{{ t._id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Delete this timing?')">Delete</a></td>
+        <td>
+          <a href="/admin/mass-timings/edit/{{ t._id }}" class="text-gold-400 text-xs hover:text-gold-300 mr-3">Edit</a>
+          <a href="/admin/mass-timings/delete/{{ t._id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Delete this timing?')">Delete</a>
+        </td>
       </tr>
       {% endfor %}
     </tbody>

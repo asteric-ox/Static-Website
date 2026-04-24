@@ -1,0 +1,102 @@
+{% extends "admin/base_admin.html" %}
+{% block admin_title %}Settings{% endblock %}
+
+{% block admin_content %}
+<h1 class="font-heading text-2xl font-bold text-white mb-8">⚙️ Site Settings</h1>
+
+<!-- Maintenance Mode Card -->
+<div class="stat-card mb-8">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="font-heading text-lg font-semibold text-gold-400 flex items-center gap-2">
+        🔧 Maintenance Mode
+      </h2>
+      <p class="text-sm text-gray-500 mt-1">When enabled, visitors see a maintenance page instead of the website. Admins can still access the admin panel.</p>
+    </div>
+  </div>
+
+  <!-- Status Banner -->
+  <div class="mb-6 px-4 py-3 rounded-xl border flex items-center gap-3
+    {% if settings.maintenance_mode %}
+      bg-amber-900/30 border-amber-700/40
+    {% else %}
+      bg-emerald-900/30 border-emerald-700/40
+    {% endif %}">
+    <div class="w-3 h-3 rounded-full
+      {% if settings.maintenance_mode %}
+        bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.5)] animate-pulse
+      {% else %}
+        bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.5)]
+      {% endif %}"></div>
+    <span class="text-sm font-semibold
+      {% if settings.maintenance_mode %}text-amber-300{% else %}text-emerald-300{% endif %}">
+      {% if settings.maintenance_mode %}
+        🚧 MAINTENANCE MODE IS ACTIVE — Public site is offline
+      {% else %}
+        ✅ Website is LIVE — All pages are accessible
+      {% endif %}
+    </span>
+  </div>
+
+  <!-- Toggle Form -->
+  <form action="/admin/settings/toggle-maintenance" method="POST" class="space-y-5">
+    <!-- Toggle Switch -->
+    <div class="flex items-center gap-4 p-4 rounded-xl bg-church-bg/50 border border-gold-900/10">
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" name="maintenance_mode" value="1"
+               class="sr-only peer"
+               {% if settings.maintenance_mode %}checked{% endif %}
+               onchange="this.form.submit()">
+        <div class="w-14 h-7 bg-gray-700 rounded-full peer
+                    peer-checked:bg-gradient-to-r peer-checked:from-amber-500 peer-checked:to-orange-500
+                    after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                    after:bg-white after:rounded-full after:h-6 after:w-6
+                    after:transition-all after:duration-300 after:shadow-lg
+                    peer-checked:after:translate-x-7
+                    transition-all duration-300"></div>
+      </label>
+      <div>
+        <p class="text-white font-medium text-sm">Enable Maintenance Mode</p>
+        <p class="text-xs text-gray-500">Instantly take the public website offline</p>
+      </div>
+    </div>
+  </form>
+
+  <!-- Custom Message Form -->
+  <form action="/admin/settings/update-maintenance-message" method="POST" class="mt-6 space-y-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-300 mb-2">Custom Maintenance Message</label>
+      <input type="text" name="maintenance_message"
+             class="admin-input"
+             placeholder="e.g. We'll be back by 6:00 PM today"
+             value="{{ settings.maintenance_message or '' }}"/>
+      <p class="text-xs text-gray-600 mt-1.5">This message will be shown to visitors on the maintenance page. Leave empty for the default message.</p>
+    </div>
+    <button type="submit" class="admin-btn">💾 Save Message</button>
+  </form>
+</div>
+
+<!-- Info Card -->
+<div class="stat-card">
+  <h3 class="font-heading text-sm font-semibold text-gold-400 mb-3 uppercase tracking-wider">ℹ️ How It Works</h3>
+  <ul class="space-y-2 text-sm text-gray-400">
+    <li class="flex items-start gap-2">
+      <span class="text-gold-500 mt-0.5">•</span>
+      <span>When <strong class="text-gray-300">Maintenance Mode</strong> is <strong class="text-amber-400">ON</strong>, all public pages redirect to a maintenance page.</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-gold-500 mt-0.5">•</span>
+      <span>The <strong class="text-gray-300">Admin Panel</strong> remains fully accessible — you can still manage content.</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-gold-500 mt-0.5">•</span>
+      <span>Static files (images, CSS, JS) continue to load normally.</span>
+    </li>
+    <li class="flex items-start gap-2">
+      <span class="text-gold-500 mt-0.5">•</span>
+      <span>Toggle the switch back to <strong class="text-emerald-400">OFF</strong> to bring the site back online instantly.</span>
+    </li>
+  </ul>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "admin/base_admin.html" %}
+{% block admin_title %}Manage Trustees{% endblock %}
+
+{% block admin_content %}
+<div class="flex items-center justify-between mb-8">
+  <h1 class="font-heading text-2xl font-bold text-white">Trustees</h1>
+</div>
+
+<!-- Add Form -->
+<div class="stat-card mb-8">
+  <h2 class="font-heading text-lg font-semibold text-gold-400 mb-4">Add New Trustee</h2>
+  <form method="POST" action="/admin/trustees/add" enctype="multipart/form-data" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Name</label>
+      <input type="text" name="name" class="admin-input" placeholder="Full Name" required/>
+    </div>
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Role</label>
+      <input type="text" name="role" class="admin-input" placeholder="e.g. Trustee" required/>
+    </div>
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Photo</label>
+      <input type="file" name="image_file" class="admin-input"/>
+    </div>
+    <div>
+      <label class="block text-xs text-gray-400 mb-1">Phone</label>
+      <input type="text" name="phone" class="admin-input" placeholder="+91 ..."/>
+    </div>
+    <div class="lg:col-span-1">
+      <button type="submit" class="admin-btn w-full">Add Trustee</button>
+    </div>
+  </form>
+</div>
+
+<!-- Table -->
+<div class="stat-card overflow-x-auto">
+  <table class="admin-table">
+    <thead>
+      <tr><th>Name</th><th>Role</th><th>Phone</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      {% for m in items %}
+      <tr>
+        <td class="font-medium text-white">{{ m.name }}</td>
+        <td class="text-gold-400">{{ m.role }}</td>
+        <td>{{ m.phone or '—' }}</td>
+        <td>
+          <a href="/admin/trustees/edit/{{ m._id }}" class="text-gold-400 text-xs hover:text-gold-300 mr-3">Edit</a>
+          <a href="/admin/trustees/delete/{{ m._id }}" class="text-red-400 text-xs hover:text-red-300" onclick="return confirm('Remove this trustee?')">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
